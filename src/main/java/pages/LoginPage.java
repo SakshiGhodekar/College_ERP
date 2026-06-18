@@ -10,6 +10,8 @@ public class LoginPage extends BaseClass {
 	public LoginPage() {
 		initPageFactory(this);
 	}
+	@FindBy(xpath="//*[@id=\"root\"]/nav/div/div/div[2]/div/button[1]")
+	WebElement clgLogin;
 	//username
 	@FindBy(id="username")
 	WebElement username;
@@ -22,10 +24,10 @@ public class LoginPage extends BaseClass {
 	@FindBy(xpath = "//*[@id=\"root\"]/div/div/div/form/div[4]/div/div/div/div/button")
     WebElement login;
 	
-	@FindBy(xpath ="/html/body/div[2]/div/div/div/div/span[2]")
-	WebElement errorMsg;
+	
 	
 	//action
+	
 	public void enteruname(String user) {
 	 username.sendKeys(user);
 	}
@@ -35,14 +37,21 @@ public class LoginPage extends BaseClass {
 	public void login() {
 		 login.click();
 		}
-	
+	public void clgLogin() {
+		clgLogin.click();// TODO Auto-generated method stub
+		
+	}
 	
 	//validation method
 	
+	@FindBy(xpath ="/html/body/div[2]/div/div/div/div/span[2]")
+	WebElement errorMsg;
+	
+
 	public boolean isErrorMessageDisplayed() {
-		// TODO Auto-generated method stub
-		return errorMsg.isDisplayed();
+	    return errorMsg.isDisplayed();
 	}
+	
 	
 		
 }

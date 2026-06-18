@@ -18,8 +18,6 @@ import org.openqa.selenium.support.PageFactory;
 
 public class BaseClass {
 
-	
-		// TODO Auto-generated method stub
  public static WebDriver driver;
 // public static String BASE_URL = "https://erp.softgridinfo.in/college-admin-login";
  public static Properties prop;

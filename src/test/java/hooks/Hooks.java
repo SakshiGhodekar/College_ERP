@@ -2,10 +2,6 @@ package hooks;
 
 import java.io.File;
 
-//import org.bouncycastle.jcajce.provider.symmetric.ChaCha.BaseCC20P1305;
-
-
-
 import base.BaseClass;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -41,7 +37,7 @@ public class Hooks extends BaseClass {
 		 System.out.println("Test Failed : "+scenario.getName());
 		 
 	 }else {
-		 System.out.println("Test Passed :"+scenario.getName());
+		 System.out.println("Test Passed : "+scenario.getName());
 		 
 	 }
 	 closeBrowser();
