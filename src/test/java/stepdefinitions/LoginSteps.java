@@ -1,60 +1,68 @@
+
 package stepdefinitions;
 
 import base.BaseClass;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import io.cucumber.java.en.*;
 import junit.framework.Assert;
 import pages.LoginPage;
 
-public class LoginSteps extends BaseClass{
+public class LoginSteps extends BaseClass {
 
-	LoginPage loginPageObj=new LoginPage();
-	//isekethrough hum login page ke methods call krenge
-	@Given("user is on home page")
-	public void user_is_on_Lonin_Page() {
-		//ursl already open hooks se
-	}
-	@When("user enters valid username and password")
-	public void user_enters_valid_username_and_password() {
+    LoginPage loginPage = new LoginPage();
 
-	    loginPageObj.clgLogin();
+    @Given("user is on home page")
+    public void home_page() {
+        // already opened in hook
+    }
 
-	    try {
-	        Thread.sleep(3000); // temporary for testing
-	    } catch (Exception e) {
-	    }
+    @When("user enters Invalid username and password")
+    public void invalid_login() {
 
-	    loginPageObj.enteruname(prop.getProperty("username"));
-	    loginPageObj.enterpass(prop.getProperty("password"));
-	    loginPageObj.login();
-	}
-	@Then("user should logged in successfully")
-	public void user_should_logged_in_successfully() {
-		System.out.println("User login successfully");
-	}
+        loginPage.clickCollegeLogin();
 
-	//invalid login scenario
-	
-	@When("user enters Invalid username and password")
-	public void user_enters_Invalid_username_and_password() {
+        loginPage.enterUsername("wronguser@gmail.com");
+        loginPage.enterPassword("wrongpass");
 
-	    loginPageObj.clgLogin();
+        loginPage.clickLogin();
+    }
 
-	    loginPageObj.enteruname("wronguser@gmail.com");
-	    loginPageObj.enterpass("wrongpassword");
+    @When("user enters wrong username and correct password")
+    public void wrong_username() {
+        loginPage.clickCollegeLogin();
 
-	    loginPageObj.login();
+        loginPage.enterUsername("wronguser@gmail.com");
+        loginPage.enterPassword("Abc@1234");
 
-	    System.out.println("Entered invalid credentials");
-	}
-	@Then("error message should be displayed")
-	public void error_message_should_be_displayed() {
+        loginPage.clickLogin();
+    }
 
-	    boolean isErrorDisplayed = loginPageObj.isErrorMessageDisplayed();
+    @When("user enters valid username and password")
+    public void valid_login() {
+        loginPage.clickCollegeLogin();
 
-	    Assert.assertTrue("Error message is not displayed", isErrorDisplayed);
+        loginPage.enterUsername(prop.getProperty("username"));
+        loginPage.enterPassword(prop.getProperty("password"));
 
-	    System.out.println("Error message displayed successfully");
-	}
+        loginPage.clickLogin();
+    }
+
+    @Then("error message should be displayed")
+    public void error_msg() {
+
+        // 🔥 ADD THIS LINE (DEBUG STEP)
+        System.out.println("========= PAGE SOURCE START =========");
+        System.out.println(driver.getPageSource());
+        System.out.println("========= PAGE SOURCE END =========");
+
+        boolean result = loginPage.isErrorMessageDisplayed();
+
+        Assert.assertTrue("Error message not displayed", result);
+    }
+
+    @Then("user should logged in successfully")
+    public void success() {
+        System.out.println("Login success");
+    }
 }
+
+
