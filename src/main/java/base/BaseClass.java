@@ -51,22 +51,37 @@ public class BaseClass {
     public void closeBrowser() {
         if (driver != null) driver.quit();
     }
-
-    public String captureScreen(String testName, String folderPath) {
-        try {
-            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-            String path = folderPath + "/" + testName + ".png";
-
-            File dest = new File(path);
-            dest.getParentFile().mkdirs();
-
-            Files.copy(src.toPath(), dest.toPath());
-            return path;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+    
+//    public String captureScreen(String testName, String folderPath) {
+//        try {
+//            File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+//            String path = folderPath + "/" + testName + ".png";
+//
+//            File dest = new File(path);
+//            dest.getParentFile().mkdirs();
+//
+//            Files.copy(src.toPath(), dest.toPath());
+//            return path;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
+    public String captureScreen(String testName,String folderPath) {
+   	 try {
+   		 File src=((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+   		 String path=folderPath +"/" + testName + ".png";
+   		 
+   		 File dest=new File(path);
+   		 dest.getParentFile().mkdir();
+   		 Files.copy(src.toPath(), dest.toPath());
+   		 return path;
+   	 }catch(Exception e) {
+   		 e.printStackTrace();
+   		 return null;
+   	 }
     }
+
 }
 
 

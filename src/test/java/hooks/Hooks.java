@@ -2,6 +2,8 @@ package hooks;
 
 import java.io.File;
 
+import com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter;
+
 import base.BaseClass;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
@@ -9,13 +11,16 @@ import io.cucumber.java.Scenario;
 
 
 public class Hooks extends BaseClass {
- @Before
- 
- public void setup(Scenario scenario) {
-	 System.out.println("Scenario Start: " + scenario.getName());
-     loadConfig();
-	 launchBrowser();
 
+ @Before
+ public void setup(Scenario scenario) {
+	
+     System.out.println("Scenario Start: " + scenario.getName());
+
+     loadConfig();
+     launchBrowser();
+
+   
  }
 
  @After
@@ -23,30 +28,23 @@ public class Hooks extends BaseClass {
 
 	    try {
 
-	        if (scenario.isFailed()) {
+	    	if (scenario.isFailed()) {
 
-	            String folderPath = "ExtentReports/screenshots";
+	    	    String folderPath = "ExtentReports/screenshots";
 
-	            // 🔥 FIX 1: Add timestamp to avoid overwrite
-	            String imgPath = captureScreen(
-	                    scenario.getName() + "_" + System.currentTimeMillis(),
-	                    folderPath
-	            );
+	    	    String imgPath = captureScreen(
+	    	            scenario.getName() + "_" + System.currentTimeMillis(),
+	    	            folderPath
+	    	    );
 
-	            // attach to cucumber report
-	            byte[] fileContent = java.nio.file.Files.readAllBytes(
-	                    new File(imgPath).toPath()
-	            );
+	    	    byte[] fileContent = java.nio.file.Files.readAllBytes(
+	    	            new File(imgPath).toPath()
+	    	    );
 
-	            scenario.attach(fileContent, "image/png", "Failed Screenshot");
+	    	    scenario.attach(fileContent, "image/png", "Failed Screenshot");
 
-	            // extent report path
-	            String relativePath = "screenshots/" + new File(imgPath).getName();
-	            com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter
-	                    .addTestStepScreenCaptureFromPath(relativePath);
-
-	            System.out.println("Test Failed : " + scenario.getName());
-	        }
+	    	    System.out.println("Test Failed : " + scenario.getName());
+	    	}
 	        else {
 	            System.out.println("Test Passed : " + scenario.getName());
 	        }
